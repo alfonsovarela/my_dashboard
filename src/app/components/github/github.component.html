@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <input [(ngModel)]="username" type="text" class="form-control form-control-lg" placeholder="Search user...">
+                <button [disabled]="username.length === 0" (click)="loadData()" class="btn btn-success">
+                    <span class="material-icons">
+                        travel_explore
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="error">
+        <div class="alert alert-danger text-center" role="alert">
+            Error has occurred. Check input's spelling or try later.
+        </div>
+    </div>
+    <app-spinner *ngIf="isDataLoading"></app-spinner>
+    <div class="row">
+        <div *ngIf="userDataLoaded" class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src={{user.avatar}} alt="user-avatar" height="45px" width="45px">
+                        </div>
+                        <div class="col-sm-8">
+                            <h5 class="card-title">{{user.username}}</h5>
+                        </div>
+                    </div>
+                    <hr />
+                    <h6 class="card-subtitle mb-2 text-muted">{{user.name}}</h6>
+                    <span class="card-text">
+                        <p><strong>Total Repos: </strong>{{user.totalRepos}}</p>
+                        <p><strong>Followers: </strong>{{user.followers}}</p>
+                        <p><strong>Following: </strong>{{user.following}}</p>
+                        <small>Created on {{user.created | date: 'dd-MM-yyyy'}}</small>
+                    </span>
+                    <p>
+                        <a href={{user.githubLink}} class="card-link" target="_blank">Link to GitHub</a>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+        <div *ngIf="reposLoaded" class="col-md-8">
+            <ul class="list-group">
+                <li *ngFor="let repo of reposList" class="list-group-item">
+                    <p> {{repo.fullName}}
+                        <span *ngIf="repo.isPrivate" class="material-icons">
+                            lock
+                        </span>
+                        <span *ngIf="!repo.isPrivate" class="material-icons">
+                            lock_open
+                        </span>
+                    </p>
+                    <p>
+                        {{repo.description}}
+                    </p>
+                    <p>
+                        <a href="{{repo.link}}" target="_blank">Link to repo</a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    
+</div>
